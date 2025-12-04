@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:user_api_app/core/constants/api_constants.dart';
 import 'package:user_api_app/models/user_model.dart';
 
-import '../core/constants/api_constants.dart';
-
 class ApiService {
   Future<UserModel> fetchUser(String userId) async {
     try {
@@ -16,7 +14,6 @@ class ApiService {
         final data = json.decode(response.body);
         return UserModel.fromJson(data);
       } else {
-        // API call failed - extract error from API response
         String errorMessage;
         try {
           final errorData = json.decode(response.body);
@@ -30,7 +27,6 @@ class ApiService {
       if (e is ApiException) {
         rethrow;
       }
-      // Exception occurred (no internet or other exception)
       throw ApiException(ApiConstants.genericError);
     }
   }
