@@ -4,39 +4,22 @@ import 'package:user_api_app/core/constants/api_constants.dart';
 import 'package:user_api_app/models/user_model.dart';
 
 class ApiService {
-  Future<UserModel> fetchUser(String userId) async {
-    try {
-      final response = await http.get(
-        Uri.parse(ApiConstants.getUserUrl(userId)),
-      );
+  /// Fetches user data from API
+  /// Returns ApiResponse with success flag
+  /// No try-catch - simple success/failure return
+  Future<ApiResponse> fetchUser(String userId) async {
+    final response = await http.get(
+      Uri.parse(ApiConstants.getUserUrl(userId)),
+    );
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return UserModel.fromJson(data);
-      } else {
-        String errorMessage;
-        try {
-          final errorData = json.decode(response.body);
-          errorMessage = errorData['error'] ?? errorData['message'] ?? response.body;
-        } catch (e) {
-          errorMessage = response.body;
-        }
-        throw ApiException(errorMessage);
-      }
-    } catch (e) {
-      if (e is ApiException) {
-        rethrow;
-      }
-      throw ApiException(ApiConstants.genericError);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return ApiResponse.fromJson(json);
     }
+
+    return ApiResponse(
+      success: false,
+      error: ApiConstants.genericError,
+    );
   }
-}
-
-class ApiException implements Exception {
-  final String message;
-
-  ApiException(this.message);
-
-  @override
-  String toString() => message;
 }

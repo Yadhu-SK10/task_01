@@ -1,31 +1,56 @@
-class UserModel {
-  final String? profileImage;
-  final String name;
-  final String userId;
-  final String age;
-  final String profession;
+class ApiResponse {
+  bool success;
+  Data? data;
+  String? error;
 
-  UserModel({
-    this.profileImage,
-    required this.name,
-    required this.userId,
-    required this.age,
-    required this.profession,
+  ApiResponse({
+    required this.success,
+    this.data,
+    this.error,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    final user = json['data']?['user'];
+  factory ApiResponse.fromJson(Map<String, dynamic> json) => ApiResponse(
+    success: json['success'] ?? false,
+    data: json['data'] != null ? Data.fromJson(json['data']) : null,
+    error: json['error'],
+  );
+}
 
-    if (user == null) {
-      throw Exception('Invalid user data');
-    }
+class Data {
+  User user;
+  String message;
 
-    return UserModel(
-      profileImage: user['profile_image'] as String?,
-      name: user['name'] as String? ?? 'N/A',
-      userId: user['user_id']?.toString() ?? 'N/A',
-      age: user['age']?.toString() ?? 'N/A',
-      profession: user['profession'] as String? ?? 'N/A',
-    );
-  }
+  Data({
+    required this.user,
+    required this.message,
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+    user: User.fromJson(json['user']),
+    message: json['message'] ?? '',
+  );
+}
+
+class User {
+  int userId;
+  String name;
+  int age;
+  String profession;
+  String profileImage;
+
+  User({
+    required this.userId,
+    required this.name,
+    required this.age,
+    required this.profession,
+    required this.profileImage,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    userId: json['user_id'] ?? 0,
+    name: json['name'] ?? 'N/A',
+    age: json['age'] ?? 0,
+    profession: json['profession'] ?? 'N/A',
+    profileImage: json['profile_image'] ?? '',
+  );
 }
