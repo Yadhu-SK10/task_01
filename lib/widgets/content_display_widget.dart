@@ -21,40 +21,37 @@ class ContentDisplayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(
       builder: (context, provider, _) {
-        return Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: provider.state == ViewState.initial
-                ? const Text(
-              'Enter a user ID (1, 2, or 3) and click Fetch User',
-              style: TextStyle(
-                fontSize: 16,
-                color: _WidgetColors.initialText,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            )
-                : provider.state == ViewState.loading
-                ? const SizedBox(
-              height: 40,
-              width: 40,
-              child: CircularProgressIndicator(
-                strokeWidth: 3,
-                color: _WidgetColors.spinnerColor,
-              ),
-            )
-                : provider.state == ViewState.success
-                ? _SuccessCard(user: provider.userData!)
-                : Text(
-              provider.errorMessage,
-              style: const TextStyle(
-                fontSize: 16,
-                color: _WidgetColors.errorRed,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
+        return Container(
+          margin: const EdgeInsets.only(top: 20),
+          child: provider.state == ViewState.initial
+              ? const Text(
+            'Enter a user ID (1, 2, or 3) and click Fetch User',
+            style: TextStyle(
+              fontSize: 16,
+              color: _WidgetColors.initialText,
+              fontWeight: FontWeight.w500,
             ),
+            textAlign: TextAlign.center,
+          )
+              : provider.state == ViewState.loading
+              ? const SizedBox(
+            height: 40,
+            width: 40,
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
+              color: _WidgetColors.spinnerColor,
+            ),
+          )
+              : provider.state == ViewState.success
+              ? _SuccessCard(user: provider.userData!)
+              : Text(
+            provider.errorMessage,
+            style: const TextStyle(
+              fontSize: 16,
+              color: _WidgetColors.errorRed,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
           ),
         );
       },
@@ -70,7 +67,6 @@ class _SuccessCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // FIX: Width adjusted to 750
       width: 750,
       decoration: BoxDecoration(
         color: _WidgetColors.cardBackground,
@@ -80,7 +76,6 @@ class _SuccessCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Image Section
           Container(
             margin: const EdgeInsets.all(4),
             child: ClipRRect(
@@ -108,8 +103,6 @@ class _SuccessCard extends StatelessWidget {
               ),
             ),
           ),
-
-          // Details Section
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(right: 20),
