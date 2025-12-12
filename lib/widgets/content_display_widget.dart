@@ -7,7 +7,7 @@ class _WidgetColors {
   static const initialText = Color(0xFF4CAF50);
   static const spinnerColor = Color(0xFF7E57C2);
   static const cardBackground = Color(0xFF43A047);
-  static const cardBorder = Color(0xFF2E7D32);
+  static const cardBorder = Color(0xFF43A047);
   static const labelWhite = Colors.white;
   static const valueYellow = Color(0xFFFFEB3B);
   static const errorRed = Colors.red;
@@ -71,13 +71,13 @@ class _SuccessCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: _WidgetColors.cardBackground,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: _WidgetColors.cardBorder, width: 3),
+
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.all(4),
+            margin: const EdgeInsets.all(10),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
@@ -105,7 +105,7 @@ class _SuccessCard extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              margin: const EdgeInsets.only(right: 20),
+              margin: const EdgeInsets.only(left: 30),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

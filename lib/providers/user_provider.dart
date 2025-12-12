@@ -5,7 +5,6 @@ import 'package:user_api_app/services/api_service.dart'; // Corrected Path
 enum ViewState { initial, loading, success, error }
 
 class UserProvider extends ChangeNotifier {
-  final ApiService _apiService = ApiService();
 
   ViewState _state = ViewState.initial;
   User? _userData;
@@ -29,7 +28,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _apiService.fetchUser(cleanId);
+       ApiResponse response = await ApiService().fetchUser(cleanId);
 
       if (response.success && response.data != null) {
         _state = ViewState.success;
@@ -38,8 +37,7 @@ class UserProvider extends ChangeNotifier {
       } else {
         _state = ViewState.error;
         _userData = null;
-        // Uses the error from API (e.g. "No user found")
-        _errorMessage = response.error ?? 'Something went wrong';
+
       }
     } catch (e) {
       _state = ViewState.error;
