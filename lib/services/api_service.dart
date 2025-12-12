@@ -1,25 +1,32 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:user_api_app/core/constants/api_constants.dart';
 import 'package:user_api_app/models/user_model.dart';
 
 class ApiService {
-  /// Fetches user data from API
-  /// Returns ApiResponse with success flag
-  /// No try-catch - simple success/failure return
   Future<ApiResponse> fetchUser(String userId) async {
-    final response = await http.get(
-      Uri.parse(ApiConstants.getUserUrl(userId)),
-    );
+    try {
+      // Construct URL using your existing ApiConstants
+      final uri = Uri.parse('${ApiConstants.baseUrl}/users/$userId');
+      final response = await http.get(uri);
 
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      return ApiResponse.fromJson(json);
+      // FIX: Always try to decode the body to get "No user found" message
+      if (response.body.isNotEmpty) {
+        final json = jsonDecode(response.body);
+        return ApiResponse.fromJson(json);
+      }
+
+      return ApiResponse(
+        success: false,
+        error: 'Something went wrong',
+      );
+
+    } catch (e) {
+      // Handles No Internet / SocketException
+      return ApiResponse(
+        success: false,
+        error: 'Something went wrong',
+      );
     }
-
-    return ApiResponse(
-      success: false,
-      error: ApiConstants.genericError,
-    );
   }
 }

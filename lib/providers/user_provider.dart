@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:user_api_app/models/user_model.dart';
-import 'package:user_api_app/services/api_service.dart';
-import 'package:user_api_app/core/constants/api_constants.dart';
+import 'package:user_api_app/services/api_service.dart'; // Corrected Path
 
 enum ViewState { initial, loading, success, error }
 
@@ -16,26 +15,21 @@ class UserProvider extends ChangeNotifier {
   User? get userData => _userData;
   String get errorMessage => _errorMessage;
 
-  /// Fetches user data from API
-  /// Uses simple success/failure check from ApiResponse
-  /// Fetches user data from API
-  /// Uses try-catch to ensure UI updates even if API fails (Caddayn Std Page 11)
   Future<void> fetchUser(String userId) async {
-    // 1. Validation
-    if (userId.isEmpty) {
+    final cleanId = userId.trim();
+
+    if (cleanId.isEmpty) {
       _state = ViewState.error;
-      _errorMessage = ApiConstants.emptyUserIdError;
+      _errorMessage = 'Please enter a user ID';
       notifyListeners();
       return;
     }
 
-    // 2. Set Loading
     _state = ViewState.loading;
     notifyListeners();
 
-    // 3. API Call with Safety (Try-Catch)
     try {
-      final response = await _apiService.fetchUser(userId);
+      final response = await _apiService.fetchUser(cleanId);
 
       if (response.success && response.data != null) {
         _state = ViewState.success;
@@ -43,21 +37,18 @@ class UserProvider extends ChangeNotifier {
         _errorMessage = '';
       } else {
         _state = ViewState.error;
-        // Use the error from API (e.g. "No user found") or generic fallback
-        _errorMessage = response.error ?? ApiConstants.genericError;
         _userData = null;
+        // Uses the error from API (e.g. "No user found")
+        _errorMessage = response.error ?? 'Something went wrong';
       }
     } catch (e) {
-      // 4. Catch Crashes (Network fail, Parsing fail)
       _state = ViewState.error;
-      _errorMessage = ApiConstants.genericError; // Or e.toString() for debugging
       _userData = null;
+      _errorMessage = 'Something went wrong';
     }
 
     notifyListeners();
   }
-
-
 
   void clearProvider() {
     _state = ViewState.initial;

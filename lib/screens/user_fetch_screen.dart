@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:user_api_app/providers/user_provider.dart';
 import 'package:user_api_app/widgets/content_display_widget.dart';
 
-class _AppColors {
+// Private constants to avoid import errors
+class _ScreenColors {
   static const greenBorder = Color(0xFF4CAF50);
   static const primaryBlue = Color(0xFF2196F3);
   static const white = Colors.white;
   static const background = Color(0xFFFEF7FF);
-  static const disabledBlue = Color(0xFF90CAF9);
   static const hintGrey = Color(0xFFBDBDBD);
 }
 
@@ -37,7 +37,7 @@ class _UserFetchScreenState extends State<UserFetchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _AppColors.background,
+      backgroundColor: _ScreenColors.background,
       body: Center(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 40.0),
@@ -48,12 +48,11 @@ class _UserFetchScreenState extends State<UserFetchScreen> {
 
               // 1. Text Field
               Container(
-                // FIX: Width adjusted to 750
                 width: 750,
                 decoration: BoxDecoration(
-                  color: _AppColors.white,
+                  color: _ScreenColors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: _AppColors.greenBorder, width: 2),
+                  border: Border.all(color: _ScreenColors.greenBorder, width: 2),
                 ),
                 child: TextField(
                   controller: _userIdController,
@@ -62,7 +61,7 @@ class _UserFetchScreenState extends State<UserFetchScreen> {
                     contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                     hintText: 'User ID',
                     hintStyle: TextStyle(
-                      color: _AppColors.hintGrey,
+                      color: _ScreenColors.hintGrey,
                       fontSize: 16,
                     ),
                   ),
@@ -82,10 +81,10 @@ class _UserFetchScreenState extends State<UserFetchScreen> {
                     return ElevatedButton(
                       onPressed: isLoading ? null : _handleFetch,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: _AppColors.primaryBlue,
-                        foregroundColor: _AppColors.white,
-                        disabledBackgroundColor: _AppColors.primaryBlue.withOpacity(0.7),
-                        disabledForegroundColor: _AppColors.white,
+                        backgroundColor: _ScreenColors.primaryBlue,
+                        foregroundColor: _ScreenColors.white,
+                        disabledBackgroundColor: _ScreenColors.primaryBlue.withOpacity(0.7),
+                        disabledForegroundColor: _ScreenColors.white,
                         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
@@ -105,9 +104,7 @@ class _UserFetchScreenState extends State<UserFetchScreen> {
               ),
 
               // 3. Result Area
-              const Expanded(
-                child: ContentDisplayWidget(),
-              ),
+              const ContentDisplayWidget(),
             ],
           ),
         ),
