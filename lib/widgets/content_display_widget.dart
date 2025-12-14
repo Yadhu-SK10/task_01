@@ -7,7 +7,6 @@ class _WidgetColors {
   static const initialText = Color(0xFF4CAF50);
   static const spinnerColor = Color(0xFF7E57C2);
   static const cardBackground = Color(0xFF43A047);
-  static const cardBorder = Color(0xFF43A047);
   static const labelWhite = Colors.white;
   static const valueYellow = Color(0xFFFFEB3B);
   static const errorRed = Colors.red;
@@ -25,34 +24,34 @@ class ContentDisplayWidget extends StatelessWidget {
           margin: const EdgeInsets.only(top: 20),
           child: provider.state == ViewState.initial
               ? const Text(
-            'Enter a user ID (1, 2, or 3) and click Fetch User',
-            style: TextStyle(
-              fontSize: 16,
-              color: _WidgetColors.initialText,
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.center,
-          )
+                  'Enter a user ID (1, 2, or 3) and click Fetch User',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: _WidgetColors.initialText,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                )
               : provider.state == ViewState.loading
-              ? const SizedBox(
-            height: 40,
-            width: 40,
-            child: CircularProgressIndicator(
-              strokeWidth: 3,
-              color: _WidgetColors.spinnerColor,
-            ),
-          )
-              : provider.state == ViewState.success
-              ? _SuccessCard(user: provider.userData!)
-              : Text(
-            provider.errorMessage,
-            style: const TextStyle(
-              fontSize: 16,
-              color: _WidgetColors.errorRed,
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.center,
-          ),
+                  ? const SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                        color: _WidgetColors.spinnerColor,
+                      ),
+                    )
+                  : provider.state == ViewState.success
+                      ? _SuccessCard(user: provider.userData!)
+                      : Text(
+                          provider.errorMessage,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: _WidgetColors.errorRed,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
         );
       },
     );
@@ -71,7 +70,6 @@ class _SuccessCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: _WidgetColors.cardBackground,
         borderRadius: BorderRadius.circular(15),
-
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
