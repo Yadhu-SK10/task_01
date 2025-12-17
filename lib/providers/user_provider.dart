@@ -5,7 +5,6 @@ import 'package:user_api_app/services/api_service.dart'; // Corrected Path
 enum ViewState { initial, loading, success, error }
 
 class UserProvider extends ChangeNotifier {
-
   ViewState _state = ViewState.initial;
   User? _userData;
   String _errorMessage = '';
@@ -28,7 +27,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-       ApiResponse response = await ApiService().fetchUser(cleanId);
+      ApiResponse response = await ApiService().fetchUser(cleanId);
 
       if (response.success && response.data != null) {
         _state = ViewState.success;
@@ -37,7 +36,7 @@ class UserProvider extends ChangeNotifier {
       } else {
         _state = ViewState.error;
         _userData = null;
-
+        _errorMessage = response.error ?? '';
       }
     } catch (e) {
       _state = ViewState.error;
